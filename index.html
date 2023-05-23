@@ -1,58 +1,70 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-</head>
-<body>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1NFPPMR8SD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-1NFPPMR8SD');
-</script>
-<script src="./rollups/aes.js"></script>
-<script>
-function decrypt(id)
-{
-	let form = document.getElementById(id);
-	let msg = form.elements['msg'].value;
-	let safe = form.elements['safe'].value;	
-	plaintext="";
-	try 
-	{
-		var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
-		plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
-	} 
-	catch (e) 
-	{
-	}
+	<head>
+	
+		<meta charset="UTF-8">  
+		<meta name="description" content="荃官八六同學會">
+		<meta name="keywords" content="荃官八六, 同學會">
+		<meta name="author" content="荃官八六">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+		<link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
+		<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
+		<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
+		<link rel='manifest' href='/site.webmanifest'>  
 
-	form.elements['out'].value = plaintext;
-};
-function encrypt(id)
-{
-	let form = document.getElementById(id);
-	let out = form.elements['out'].value;
-	let safe = form.elements['safe'].value;
-	msg = btoa(CryptoJS.AES.encrypt(out, safe));
-	form.elements['msg'].value = msg;
-};
-</script>
+	</head>
 
-<form id="cipher">
-<label for="cipher">Encrypted Message:</label><br>
-<textarea id="msg" name="msg" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
-<p>
-Passcode:
-<input id="safe" name="safe" type="password" size="8" maxsize="256">
+	<body>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1NFPPMR8SD"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-1NFPPMR8SD');
+		</script>
+		<script src="./rollups/aes.js"></script>
+		<script>
+			function decrypt(id)
+			{
+				let form = document.getElementById(id);
+				let msg = form.elements['msg'].value;
+				let safe = form.elements['safe'].value;	
+				plaintext="";
+				try 
+				{
+					var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
+					plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
+				} 
+				catch (e) 
+				{
+				}
 
-<button type="button" onClick="decrypt('cipher');">Decrypt ↓</button>
-<button type="button" onClick="encrypt('cipher');">Encrypt ↑</button>
-<p>
-<label for="cipher">Decrypted Message:</label><br>
-<textarea id="out" name="out" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
-</form>
-</body>
+				form.elements['out'].value = plaintext;
+			};
+			function encrypt(id)
+			{
+				let form = document.getElementById(id);
+				let out = form.elements['out'].value;
+				let safe = form.elements['safe'].value;
+				msg = btoa(CryptoJS.AES.encrypt(out, safe));
+				form.elements['msg'].value = msg;
+			};
+		</script>
+
+		<form id="cipher">
+			<label for="cipher">Encrypted Message:</label><br>
+			<textarea id="msg" name="msg" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
+			<p>
+			Passcode:
+			<input id="safe" name="safe" type="password" size="8" maxsize="256">
+			<button type="button" onClick="decrypt('cipher');">Decrypt ↓</button>
+			<button type="button" onClick="encrypt('cipher');">Encrypt ↑</button>
+			<p>
+			<label for="cipher">Decrypted Message:</label><br>
+			<textarea id="out" name="out" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
+		</form>
+	
+	</body>
 </html>

@@ -1,46 +1,60 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-</head>
-<body>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-1NFPPMR8SD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-1NFPPMR8SD');
-</script>
-<script src="./rollups/aes.js"></script>
-<script>
-function decrypt(id)
-{
-	let form = document.getElementById(id);
-	let msg = "";
-	let safe = form.elements['safe'].value;	
-	var plaintext="";
-
-	try 
-	{
-		var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
-		plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
-	} 
-	catch (e) 
-	{
-	}
+	<head>
 	
-	form.elements['out'].value = plaintext;
-};
-</script>
+		<meta charset="UTF-8">
+		<meta name="description" content="荃官八六同學會">
+		<meta name="keywords" content="荃官八六, 同學會">
+		<meta name="author" content="荃官八六">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+		<link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
+		<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
+		<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
+		<link rel='manifest' href='/site.webmanifest'> 	
+		
+	</head>
+	
+	<body>
+		<!-- Google tag (gtag.js) -->
+		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1NFPPMR8SD"></script>
+		<script>
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-1NFPPMR8SD');
+		</script>
+		<script src="./rollups/aes.js"></script>
+		<script>
+			function decrypt(id)
+			{
+				let form = document.getElementById(id);
+				let msg = "";
+				let safe = form.elements['safe'].value;	
+				var plaintext="";
 
-<form id="cipher">
-Passcode:
-<input id="safe" name="safe" type="password" size="10" maxsize="255">
-<button type="button" onClick="decrypt('cipher');">Show Message ↓</button>
-<p>
-<label for="cipher">Message:</label><br>
-<textarea id="out" name="out" rows="4" cols="50" size="65535" maxlength="65535"></textarea><br>
-</form>
-</body>
+				try 
+				{
+					var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
+					plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
+				} 
+				catch (e) 
+				{
+				}
+				
+				form.elements['out'].value = plaintext;
+			};
+		</script>
+
+		<form id="cipher">
+			Passcode:
+			<input id="safe" name="safe" type="password" size="10" maxsize="255">
+			<button type="button" onClick="decrypt('cipher');">Show Message ↓</button>
+			<p>
+			<label for="cipher">Message:</label><br>
+			<textarea id="out" name="out" rows="4" cols="50" size="65535" maxlength="65535"></textarea><br>
+		</form>
+
+	</body>
+	
 </html>
