@@ -1,0 +1,49 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+<script src="./rollups/aes.js"></script>
+<script>
+function decrypt(id)
+{
+	let form = document.getElementById(id);
+	let msg = form.elements['msg'].value;
+	let safe = form.elements['safe'].value;	
+	plaintext="";
+	try 
+	{
+		var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
+		plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
+	} 
+	catch (e) 
+	{
+	}
+
+	form.elements['out'].value = plaintext;
+};
+function encrypt(id)
+{
+	let form = document.getElementById(id);
+	let out = form.elements['out'].value;
+	let safe = form.elements['safe'].value;
+	msg = btoa(CryptoJS.AES.encrypt(out, safe));
+	form.elements['msg'].value = msg;
+};
+</script>
+
+<form id="cipher">
+<label for="cipher">Encrypted Message:</label><br>
+<textarea id="msg" name="msg" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
+<p>
+Passcode:
+<input id="safe" name="safe" type="password" size="8" maxsize="256">
+
+<button type="button" onClick="decrypt('cipher');">Decrypt ↓</button>
+<button type="button" onClick="encrypt('cipher');">Encrypt ↑</button>
+<p>
+<label for="cipher">Decrypted Message:</label><br>
+<textarea id="out" name="out" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
+</form>
+</body>
+</html>
