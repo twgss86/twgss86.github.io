@@ -30,7 +30,8 @@
 			function getmessage(id)
 			{
 				let form = document.getElementById(id);	
-				encrypted_text = window.location.search;				
+				let encrypted_text_ = window.location.search;
+				encrypted_text = encrypted_text.substring(encrypted_text.indexOf('?'))				
 				form.elements['encrypted_text'].value = encrypted_text;				
 			}
 			function decrypt(id)
@@ -71,7 +72,7 @@
 					if (navigator.share) 
 					{
 						navigator.share({
-							url: 'https://twgss86.github.io/' + encrypted_text,
+							url: 'https://twgss86.github.io/?' + encrypted_text,
 							title: 'TWGSS86 Encrypted Message'
 						})
 					}
