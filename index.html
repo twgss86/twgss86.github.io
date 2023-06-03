@@ -30,9 +30,8 @@
 			function getmessage(id)
 			{
 				let form = document.getElementById(id);	
-				let encrypted_text_ = window.location.search;
-				encrypted_text = encrypted_text.substring(encrypted_text.indexOf('?'))				
-				form.elements['encrypted_text'].value = encrypted_text;				
+				let encrypted_text = window.location.search;
+				form.elements['encrypted_text'].value = encrypted_text.substring(1);
 			}
 			function decrypt(id)
 			{
