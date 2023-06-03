@@ -15,7 +15,7 @@
 
 	</head>
 
-	<body>
+	<body onload="getmessage('cipher');">
 		<!-- Google tag (gtag.js) -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=G-1NFPPMR8SD"></script>
 		<script>
@@ -27,6 +27,12 @@
 		<script src="./rollups/aes.js"></script>
 		<script src="./rollups/sha256.js"></script>
 			<script>
+			function getmessage(id)
+			{
+				let form = document.getElementById(id);	
+				encrypted_text = window.location.search;				
+				form.elements['encrypted_text'].value = encrypted_text;				
+			}
 			function decrypt(id)
 			{
 				let form = document.getElementById(id);
@@ -65,7 +71,8 @@
 					if (navigator.share) 
 					{
 						navigator.share({
-							text: encrypted_text
+							url: 'https://twgss86.github.io/' + encrypted_text,
+							title: 'TWGSS86 Encrypted Message'
 						})
 					}
 					//window.open(url);
