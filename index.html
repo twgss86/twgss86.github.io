@@ -8,10 +8,10 @@
 		<meta name="author" content="荃官八六">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-		<link rel='apple-touch-icon' sizes='180x180' href='/apple-touch-icon.png'>
-		<link rel='icon' type='image/png' sizes='32x32' href='/favicon-32x32.png'>
-		<link rel='icon' type='image/png' sizes='16x16' href='/favicon-16x16.png'>
-		<link rel='manifest' href='/site.webmanifest'>  
+		<link rel='apple-touch-icon' sizes='180x180' href='apple-touch-icon.png'>
+		<link rel='icon' type='image/png' sizes='32x32' href='favicon-32x32.png'>
+		<link rel='icon' type='image/png' sizes='16x16' href='favicon-16x16.png'>
+		<link rel='manifest' href='site.webmanifest'>  
 
 	</head>
 
@@ -25,45 +25,49 @@
 			gtag('config', 'G-1NFPPMR8SD');
 		</script>
 		<script src="./rollups/aes.js"></script>
-		<script>
+		<script src="./rollups/sha256.js"></script>
+			<script>
 			function decrypt(id)
 			{
 				let form = document.getElementById(id);
-				let msg = form.elements['msg'].value;
-				let safe = form.elements['safe'].value;	
-				plaintext="";
-				try 
-				{
-					var decryptedBytes = CryptoJS.AES.decrypt(atob(msg), safe);
-					plaintext = plaintext + decryptedBytes.toString(CryptoJS.enc.Utf8);
-				} 
-				catch (e) 
-				{
-				}
+				form.elements['decrypted_text'].value = "";
+				let encrypted_text = form.elements['encrypted_text'].value;
+				let decrypted_text = "";
+				let key = form.elements['key'].value;
+				let	key_hash = CryptoJS.SHA256(key);	
+				let decryptedBytes = CryptoJS.AES.decrypt(encrypted_text, key);
+				encrypted_text = decryptedBytes.toString(CryptoJS.enc.Utf8);
+				decryptedBytes = CryptoJS.AES.decrypt(encrypted_text, key_hash.toString());
+				decrypted_text = decryptedBytes.toString(CryptoJS.enc.Utf8);
 
-				form.elements['out'].value = plaintext;
+				form.elements['decrypted_text'].value = decrypted_text;
 			};
 			function encrypt(id)
 			{
 				let form = document.getElementById(id);
-				let out = form.elements['out'].value;
-				let safe = form.elements['safe'].value;
-				msg = btoa(CryptoJS.AES.encrypt(out, safe));
-				form.elements['msg'].value = msg;
+				form.elements['encrypted_text'].value = "";
+				let encrypted_text="";
+				let decrypted_text = form.elements['decrypted_text'].value;
+				let key = form.elements['key'].value;		
+				let	key_hash = CryptoJS.SHA256(key);			
+				encrypted_text = CryptoJS.AES.encrypt(decrypted_text, key_hash.toString()).toString();
+				encrypted_text = CryptoJS.AES.encrypt(encrypted_text, key).toString();
+				
+				form.elements['encrypted_text'].value = encrypted_text;
 			};
 		</script>
 
 		<form id="cipher">
-			<label for="msg">Encrypted Message:</label><br>
-			<textarea id="msg" name="msg" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
+			<label for="encrypted_text">Encrypted Message:</label><br>
+			<textarea id="encrypted_text" name="encrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
 			<p>
-			Passcode:
-			<input id="safe" name="safe" type="password" size="8" maxsize="256">
+			Secret Key:
+			<input id="key" name="key" type="password" size="8" maxsize="256">
 			<button type="button" onClick="decrypt('cipher');">Decrypt ↓</button>
 			<button type="button" onClick="encrypt('cipher');">Encrypt ↑</button>
 			<p>
-			<label for="out">Decrypted Message:</label><br>
-			<textarea id="out" name="out" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
+			<label for="decrypted_text">Decrypted Message:</label><br>
+			<textarea id="decrypted_text" name="decrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
 		</form>
 	
 	</body>
