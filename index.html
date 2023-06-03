@@ -55,11 +55,31 @@
 				
 				form.elements['encrypted_text'].value = encrypted_text;
 			};
+			function share(id)
+			{
+				let form = document.getElementById(id);			
+				let encrypted_text=form.elements['encrypted_text'].value;				
+				let url = "whatsapp://send?text=" + encrypted_text;
+				if (encrypted_text) 
+				{
+					if (navigator.share) 
+					{
+						navigator.share({
+							title: 'Encrypted Message',
+							text: encrypted_text,
+							url: 'https://twgss86.github.io/',
+						})
+					}
+					//window.open(url);
+				};
+
+			};			
 		</script>
 
 		<form id="cipher">
 			<label for="encrypted_text">Encrypted Message:</label><br>
-			<textarea id="encrypted_text" name="encrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea>
+			<textarea id="encrypted_text" name="encrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
+			<button type="button" onClick="share('cipher');">Share</button>
 			<p>
 			Secret Key:
 			<input id="key" name="key" type="password" size="8" maxsize="256">
@@ -67,7 +87,8 @@
 			<button type="button" onClick="encrypt('cipher');">Encrypt ↑</button>
 			<p>
 			<label for="decrypted_text">Decrypted Message:</label><br>
-			<textarea id="decrypted_text" name="decrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea><br>
+			<textarea id="decrypted_text" name="decrypted_text" rows="8" cols="40" size="65535" maxlength="65535"></textarea><p>			
+			
 		</form>
 	
 	</body>
