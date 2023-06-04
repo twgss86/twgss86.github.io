@@ -32,13 +32,13 @@
 				let form = document.getElementById(id);	
 				let url = window.location.search;
 				urlParams = new URLSearchParams(url);
-				form.elements['encrypted_text'].value = urlParams.get('msg');
+				form.elements['encrypted_text'].value = trim(urlParams.get('msg'));
 			}
 			function decrypt(id)
 			{
 				let form = document.getElementById(id);
 				form.elements['decrypted_text'].value = "";
-				let encrypted_text = form.elements['encrypted_text'].value;
+				let encrypted_text = trim(form.elements['encrypted_text'].value);
 				let decrypted_text = "";
 				let key = form.elements['key'].value;
 				let	key_hash = CryptoJS.SHA256(key);	
