@@ -30,8 +30,9 @@
 			function getmessage(id)
 			{
 				let form = document.getElementById(id);	
-				let encrypted_text = window.location.search;
-				form.elements['encrypted_text'].value = encrypted_text.substring(1);
+				let url = window.location.search;
+				urlParams = new URLSearchParams(url);
+				form.elements['encrypted_text'].value = urlParams.get('msg');
 			}
 			function decrypt(id)
 			{
@@ -41,7 +42,7 @@
 				let decrypted_text = "";
 				let key = form.elements['key'].value;
 				let	key_hash = CryptoJS.SHA256(key);	
-				let decryptedBytes = CryptoJS.AES.decrypt(encrypted_text, key);
+				let decryptedBytes = CryptoJS.AES.decrypt(unescape(encrypted_text), key);
 				encrypted_text = decryptedBytes.toString(CryptoJS.enc.Utf8);
 				decryptedBytes = CryptoJS.AES.decrypt(encrypted_text, key_hash.toString());
 				decrypted_text = decryptedBytes.toString(CryptoJS.enc.Utf8);
@@ -59,19 +60,19 @@
 				encrypted_text = CryptoJS.AES.encrypt(decrypted_text, key_hash.toString()).toString();
 				encrypted_text = CryptoJS.AES.encrypt(encrypted_text, key).toString();
 				
-				form.elements['encrypted_text'].value = encrypted_text;
+				form.elements['encrypted_text'].value = escape(encrypted_text);
 			};
 			function share(id)
 			{
 				let form = document.getElementById(id);			
 				let encrypted_text=form.elements['encrypted_text'].value;				
-				let url = "whatsapp://send?text=" + encrypted_text;
+				let url = 'https://twgss86.github.io/?msg=' + encrypted_text;
 				if (encrypted_text) 
 				{
 					if (navigator.share) 
 					{
 						navigator.share({
-							url: 'https://twgss86.github.io/?' + encrypted_text,
+							url: url,
 							title: 'TWGSS86 Encrypted Message'
 						})
 					}
