@@ -32,15 +32,13 @@
 				let form = document.getElementById(id);	
 				let url = window.location.search;
 				urlParams = new URLSearchParams(url);
-				let encrypted_text = "";
-				encrypted_text = urlParams.get('msg');
-				form.elements['encrypted_text'].value = encrypted_text.replace(/ /g, "").replace(/\n/g, "");
+				form.elements['encrypted_text'].value = urlParams.get('msg');
 			}
 			function decrypt(id)
 			{
 				let form = document.getElementById(id);
 				form.elements['decrypted_text'].value = "";
-				let encrypted_text = trim(form.elements['encrypted_text'].value);
+				let encrypted_text = form.elements['encrypted_text'].value;
 				let decrypted_text = "";
 				let key = form.elements['key'].value;
 				let	key_hash = CryptoJS.SHA256(key);	
@@ -62,7 +60,7 @@
 				encrypted_text = CryptoJS.AES.encrypt(decrypted_text, key_hash.toString()).toString();
 				encrypted_text = CryptoJS.AES.encrypt(encrypted_text, key).toString();
 				
-				form.elements['encrypted_text'].value = escape(encrypted_text);
+				form.elements['encrypted_text'].value = encodeURIComponent(encrypted_text);
 			};
 			function share(id)
 			{
