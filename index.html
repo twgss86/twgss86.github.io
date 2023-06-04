@@ -32,7 +32,9 @@
 				let form = document.getElementById(id);	
 				let url = window.location.search;
 				urlParams = new URLSearchParams(url);
-				form.elements['encrypted_text'].value = trim(urlParams.get('msg'));
+				let encrypted_text = "";
+				encrypted_text = urlParams.get('msg');
+				form.elements['encrypted_text'].value = encrypted_text.replace(/ /g, "").replace(/\n/g, "");
 			}
 			function decrypt(id)
 			{
